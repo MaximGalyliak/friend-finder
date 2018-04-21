@@ -1,0 +1,20 @@
+{
+  "name": "friend-finder",
+  "version": "1.0.0",
+  "description": "simple app to find your friends",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaximGalyliak/friend-finder.git"
+  },
+  "author": "MaximG",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaximGalyliak/friend-finder/issues"
+  },
+  "homepage": "https://github.com/MaximGalyliak/friend-finder#readme"
+}
