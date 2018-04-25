@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>FriendFinder</title>
+
+  <!-- Latest compiled and minified CSS & JS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h2>Survey Questions</h2>
+    <hr>
+
+    <h3>
+      <strong>About You</strong>
+    </h3>
+    <br/>
+
+    <h4>Name (Required)</h4>
+    <input type="text" id="name" class="form-control" required>
+
+    <h4>Link to Photo Image (Required)</h4>
+    <input type="text" id="photo" class="form-control" required>
+
+    <hr>
+
+    <h3>
+      <strong>Question 1</strong>
+    </h3>
+    <h4>Your mind is always buzzing with unexplored ideas and plans.</h4>
+    <br/>
+    <form id="q1">
+    </form>
+
+    <h3>
+      <strong>Question 2</strong>
+    </h3>
+    <h4>Generally speaking, you rely more on your experience than your imagination.</h4>
+    <br/>
+    <form id="q2">
+    </form>
+
+    <h3>
+      <strong>Question 3</strong>
+    </h3>
+    <h4>You find it easy to stay relaxed and focused even when there is some pressure.</h4>
+    <br/>
+    <form id="q3">
+    </form>
+
+    <h3>
+      <strong>Question 4</strong>
+    </h3>
+    <h4>You rarely do something just out of sheer curiosity.</h4>
+    <br/>
+    <form id="q4">
+    </form>
+
+    <h3>
+      <strong>Question 5</strong>
+    </h3>
+    <h4>People can rarely upset you.</h4>
+    <br/>
+    <form id="q5">
+    </form>
+
+    <h3>
+      <strong>Question 6</strong>
+    </h3>
+    <h4>It is often difficult for you to relate to other people’s feelings.</h4>
+    <br/>
+    <form id="q6">
+    </form>
+
+    <h3>
+      <strong>Question 7</strong>
+    </h3>
+    <h4>In a discussion, truth should be more important than people’s sensitivities.</h4>
+    <br/>
+    <form id="q7">
+    </form>
+
+    <h3>
+      <strong>Question 8</strong>
+    </h3>
+    <h4>You rarely get carried away by fantasies and ideas.</h4>
+    <br/>
+    <form id="q8">
+    </form>
+
+    <h3>
+      <strong>Question 9</strong>
+    </h3>
+    <h4>You feel more energetic after spending time with a group of people.</h4>
+    <br/>
+    <form id="q9">
+    </form>
+
+    <h3>
+      <strong>Question 10</strong>
+    </h3>
+    <h4>You find it easy to stay relaxed and focused even when there is some pressure.</h4>
+    <br/>
+    <form id="q10">
+    </form>
+
+    <hr/>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit">
+      Submit
+    </button>
+
+    <hr>
+    <footer class="footer">
+      <div class="container">
+        <p>
+          <a href="/api/friends">API</a> |
+          <a href="https://github.com/MaximGalyliak/friend-finder">GitHub</a>
+        </p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Modal -->
+  <div id="results-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h2 class="modal-title">
+            <strong>Best Match</strong>
+          </h2>
+        </div>
+        <div class="modal-body">
+          <h2 id="match-name"></h2>
+          <img id="match-img" src="" alt="" style="width: 150px">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="text/javascript">
+
+    function isInputCorrect() {
+
+      let emptyRegex = /^$|\s+/;
+      let imgLinkRegex = /^(https?|ftp):\/\/(((([a-z]|[A-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([A-Z]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[A-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|[A-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[A-Z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[A-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[A-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|[A-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[A-Z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|[A-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|[A-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|[A-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|[A-Z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/;
+      let name = $("#name").val();
+      let img = $("#photo").val();
+      let result = true;
+
+      if (emptyRegex.test(name)) {
+
+        alert("Name can't be empty!");
+        result = false;
+
+      } else {
+
+        if (!imgLinkRegex.test(img)) {
+
+          alert("Link to image is not valid!");
+          result = false;
+
+        } else {
+
+          $('form').each(function (index) {
+
+            if ($(this).attr('data-checked') === undefined || '') {
+
+              alert(`You missed a question number ${index + 1}`);
+
+              result = false;
+
+              return false;
+
+            }
+
+          });
+
+        }
+
+      }
+
+      return result;
+
+    }
+
+    function addRadioButtons() {
+
+      $(this).append(`
+      <label class="radio-inline">
+        <input type="radio" value="1">Strongly disagree
+      </label>
+      <label class="radio-inline">
+        <input type="radio" value="2">Disagree
+      </label>
+      <label class="radio-inline">
+        <input type="radio" value="3">Neither agree nor disagree
+      </label>
+      <label class="radio-inline">
+        <input type="radio" value="4">Agree
+      </label>
+      <label class="radio-inline">
+        <input type="radio" value="5">Strongly agree
+      </label>`);
+
+    };
+
+    function clickRadio() {
+
+      $(this).closest('form').attr('data-checked', $(event.target).attr('value'));
+
+    };
+
+    //attach radio buttons to each form
+    $('form').each(addRadioButtons);
+
+    //attach to each radio event that changes form data attr
+    $(':radio').on('click', clickRadio);
+
+    // Capture the form inputs
+    $("#submit").on("click", (event) => {
+
+      event.preventDefault();
+
+      if (isInputCorrect()) {
+
+        const input = {
+          name: $("#name").val(),
+          photo: $("#photo").val(),
+          scores: [
+            $("#q1").attr('data-checked'),
+            $('#q2').attr('data-checked'),
+            $("#q3").attr('data-checked'),
+            $('#q4').attr('data-checked'),
+            $("#q5").attr('data-checked'),
+            $("#q6").attr('data-checked'),
+            $("#q7").attr('data-checked'),
+            $("#q8").attr('data-checked'),
+            $("#q9").attr('data-checked'),
+            $("#q10").attr('data-checked'),
+          ]
+        };
+
+        // AJAX post the data to the friends API.
+        $.post("/api/friends", input, function (data) {
+
+          $("#match-name").text(data.name);
+          $("#match-img").attr("src", data.photo);
+          $("#results-modal").modal("toggle");
+
+        });
+
+      }
+
+    });
+
+  </script>
+
+</body>
+
+</html>
