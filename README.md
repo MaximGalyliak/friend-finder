@@ -2,7 +2,7 @@
 
   Answer a series of questions to figure out who cant be your best match!
 
-  ![alt-text](gifs/friendfinder.gif)
+  ![alt-text](gif/friendfinder.gif)
 
  ## Map
 
@@ -20,7 +20,7 @@
     - node_modules
     - package.json
     - server.js
-    
+
   ```
   
  ## Tools Used
