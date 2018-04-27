@@ -48,10 +48,13 @@ apiR.post('/friends', (req, res) => {
 
     friends.push(req.body);
 
-    Fs.writeFileSync(Path.join(__dirname, '../data/friends.json'), JSON.stringify(friends, null, 2));
+    Fs.writeFile(Path.join(__dirname, '../data/friends.json'), JSON.stringify(friends, null, 2), ()=>{
+        console.log('Write success!');
+        res.json(friends[friendIndex]);
 
-    res.json(friends[friendIndex]);
+    });
 
+    
 });
 
 module.exports = apiR;
